@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Chrome Proxy</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="shell" aria-labelledby="appTitle">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brandMark" aria-hidden="true"></div>
+        <div>
+          <p class="eyebrow">Правила</p>
+          <h1 id="appTitle">Chrome Proxy</h1>
+        </div>
+      </div>
+      <div id="countBadge" class="countBadge">ALL</div>
+    </header>
+
+    <section class="statusPanel" aria-live="polite">
+      <div id="dot" class="stateDot" aria-hidden="true"></div>
+      <div>
+        <div id="status" class="statusText">...</div>
+        <div id="detail" class="detailText">Загрузка</div>
+      </div>
+    </section>
+
+    <button id="toggle" class="switchButton" type="button" role="switch" aria-checked="true">
+      <span class="switchCopy">
+        <span id="toggleText">Прокси</span>
+        <span id="toggleHint">Пауза</span>
+      </span>
+      <span class="switchTrack" aria-hidden="true">
+        <span class="switchThumb"></span>
+      </span>
+    </button>
+
+    <section class="currentSite">
+      <div class="siteInfo">
+        <p class="sectionLabel">Сайт</p>
+        <div id="currentHost" class="hostText">-</div>
+      </div>
+      <div class="siteControls">
+        <span id="currentMode" class="modePill">...</span>
+        <button id="siteAction" class="siteButton" type="button">Исключить</button>
+      </div>
+    </section>
+
+    <form id="manualForm" class="manualForm">
+      <label for="manualHost">Исключить домен</label>
+      <div class="inputRow">
+        <input id="manualHost" type="text" spellcheck="false" autocomplete="off" placeholder="example.com">
+        <button id="addManual" class="iconButton" type="submit" aria-label="Исключить домен">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <section class="listSection">
+      <div class="listHeader">
+        <p class="sectionLabel">Исключения</p>
+        <button id="clearSites" class="clearButton" type="button" aria-label="Очистить исключения">Очистить</button>
+      </div>
+      <div id="emptyList" class="emptyList">Нет исключений</div>
+      <ul id="siteList" class="siteList"></ul>
+    </section>
+
+    <p id="error" class="message" role="alert"></p>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>
