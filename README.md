@@ -1,43 +1,45 @@
+[![Русский](https://img.shields.io/badge/%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9-181717?style=for-the-badge)](README.ru.md)
+
 # Chrome Proxy
 
-Расширение Chrome Manifest V3 для прокси и исключений по сайтам. Действует только в профиле Chrome, где установлено, и не меняет системные настройки или другие приложения.
+A Chrome Manifest V3 extension for proxy routing and per-site exclusions. It applies only to the Chrome profile where it is installed and does not change system settings or other applications.
 
-## Возможности
+## Features
 
-- Общий переключатель прокси и сохранение настроек между запусками.
-- Исключения для текущего сайта или введённого вручную домена и его поддоменов.
-- Редактирование списка на паузе без включения прокси.
-- Повтор неудавшегося отключения с сохранением прежнего положения переключателя.
+- A global proxy switch with settings preserved between sessions.
+- Exclusions for the current site or a manually entered domain and its subdomains.
+- Edit exclusions while paused without enabling the proxy.
+- Retry a failed disable operation while retaining the previous switch position.
 
-## Установка и запуск
+## Installation and startup
 
-1. Запустите свой SOCKS5-сервер. По умолчанию используется локальный `127.0.0.1:21982`; endpoint задаётся в `PROXY_CONFIG` файла `background.js`.
-2. Откройте `chrome://extensions` и включите режим разработчика.
-3. Нажмите "Загрузить распакованное расширение" и выберите папку проекта.
-4. Откройте Chrome Proxy через значок расширения. Новая установка находится на паузе; включите прокси переключателем.
+1. Start your SOCKS5 server. The default is the local endpoint `127.0.0.1:21982`; configure it in `PROXY_CONFIG` in `background.js`.
+2. Open `chrome://extensions` and enable Developer mode.
+3. Click "Load unpacked" and select the project folder.
+4. Open Chrome Proxy using its extension icon. A new installation starts paused; use the switch to enable the proxy.
 
-Расширение не содержит сервер или туннель. SOCKS5 используется без логина и пароля; credentials в исходники добавлять не нужно. После изменения файлов перезагрузите расширение на странице `chrome://extensions`.
+The extension does not include a server or tunnel. SOCKS5 is used without a username or password; do not add credentials to the source files. After changing files, reload the extension at `chrome://extensions`.
 
-## Использование
+## Usage
 
-- `ALL`: все публичные сайты идут через прокси.
-- `EX`: сохранённые домены и поддомены открываются напрямую, остальные через прокси.
-- Пауза: расширение снимает свои настройки прокси, не удаляя исключения.
+- `ALL`: all public sites use the proxy.
+- `EX`: saved domains and their subdomains connect directly; other sites use the proxy.
+- Paused: the extension removes its proxy settings without deleting exclusions.
 
-Кнопка "Исключить" добавляет текущий домен. Также можно ввести домен вручную, удалить отдельное исключение или очистить список. При ошибке отключения переключатель сохраняет прежнее положение, чтобы можно было повторить действие.
+The "Исключить" (Exclude) button adds the current domain. You can also enter a domain manually, remove an individual exclusion, or clear the list. If disabling fails, the switch retains its previous position so you can retry.
 
-## Проверки
+## Checks
 
-Нужен Node.js 24 LTS; точная версия указана в [.node-version](.node-version). Внешних зависимостей и сборки нет.
+Node.js 24 LTS is required; the exact version is specified in [.node-version](.node-version). There are no external dependencies or build step.
 
 ```bash
 node scripts/check.mjs
 ```
 
-Команда проверяет синтаксис, manifest, PAC, сохранение настроек, конкуренцию и ошибки Chrome API. Проверки изолированы от пользовательского профиля и не изменяют внешний трафик. Предупреждения считаются ошибками.
+This command checks syntax, the manifest, PAC, settings persistence, concurrency, and Chrome API errors. Checks are isolated from the user profile and do not alter external traffic. Warnings are treated as errors.
 
-## Ограничения
+## Limitations
 
-Локальные имена и приватные IPv4 остаются прямыми. Для остальных сайтов при недоступном SOCKS5 нет запасного прямого подключения. Значок отражает применение настроек Chrome; доступность сервера и внешний IP владелец проверяет отдельно.
+Local names and private IPv4 addresses always connect directly. For other sites, there is no direct connection fallback if SOCKS5 is unavailable. The icon indicates whether Chrome settings were applied; the owner must check server availability and the external IP separately.
 
-Держите папку распакованного расширения на постоянном месте. Смена пути может изменить его ID, и сохранённые исключения автоматически не переносятся.
+Keep the unpacked extension folder in a permanent location. Moving it may change the extension ID, and saved exclusions are not transferred automatically.
