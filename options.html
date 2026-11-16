@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Настройки · Chrome Proxy</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="dist/options.js"></script>
+  </head>
+  <body class="options">
+    <main id="app" class="settings-shell" aria-busy="true">
+      <header class="settings-header"><div class="brand"><img src="icons/icon-48.png" width="36" height="36" alt="" /><div><h1>Chrome Proxy</h1><p class="muted">Подключение в этом профиле Chrome</p></div></div><button id="retry" class="button secondary" type="button">Проверить настройки</button></header>
+      <p id="error" class="feedback error" role="alert" hidden></p>
+      <p id="notice" class="feedback" role="status" hidden></p>
+      <p id="saved" class="save-status" role="status">Загружаю настройки…</p>
+      <section class="panel mode-panel" aria-labelledby="connection-heading">
+        <div class="section-heading"><h2 id="connection-heading">Как подключаться</h2><span id="control" class="control-label">Проверяю управление…</span></div>
+        <fieldset id="mode-picker" class="mode-cards" disabled>
+          <legend class="visually-hidden">Режим подключения</legend>
+          <label class="mode-card"><input type="radio" name="mode" value="auto" /><span><strong>Авто</strong><small>Прокси для всех сайтов, кроме исключений ниже.</small></span></label>
+          <label class="mode-card"><input type="radio" name="mode" value="direct" /><span><strong>Напрямую</strong><small>Обычный интернет для всех сайтов в этом профиле.</small></span></label>
+          <label class="mode-card"><input type="radio" name="mode" value="system" /><span><strong>Как в macOS</strong><small>Использовать системные настройки. В них тоже может быть прокси.</small></span></label>
+        </fieldset>
+        <p class="hint">Настройки действуют только здесь. Рабочие профили, Steam и настройки macOS управляются отдельно.</p>
+      </section>
+      <div class="settings-grid">
+        <div class="settings-column">
+          <section class="panel" aria-labelledby="auto-heading">
+            <h2 id="auto-heading">Правила режима «Авто»</h2>
+            <p id="auto-hint" class="hint">Изменения сохраняются сразу.</p>
+            <fieldset id="rules" class="rule-controls" disabled>
+              <legend class="visually-hidden">Автоматические правила</legend>
+              <label class="switch-row"><span><strong>Локальная сеть напрямую</strong><small>Роутер, localhost и устройства в домашней сети.</small></span><input id="bypass-local" type="checkbox" role="switch" /></label>
+              <label class="switch-row"><span><strong>.ru, .su и .рф напрямую</strong><small>Остальные российские сайты можно добавить справа.</small></span><input id="bypass-russian" type="checkbox" role="switch" /></label>
+              <label class="switch-row"><span><strong>Интернет без прокси</strong><small>Если прокси недоступен, пробовать обычное соединение.</small></span><input id="fallback" type="checkbox" role="switch" /></label>
+            </fieldset>
+          </section>
+          <section class="panel" aria-labelledby="proxy-heading">
+            <h2 id="proxy-heading">Адрес прокси</h2>
+            <p class="hint">Обычно это локальный сервер Happ. Используйте адрес и порт из настроек вашего прокси.</p>
+            <form id="proxy-form">
+              <fieldset id="proxy-fields" class="proxy-fields" disabled>
+                <legend class="visually-hidden">Параметры сервера</legend>
+                <label class="field">Тип<select id="scheme"><option value="http">HTTP</option><option value="socks5">SOCKS5</option></select></label>
+                <label class="field host-field">Адрес<input id="proxy-host" type="text" required autocomplete="off" spellcheck="false" maxlength="253" placeholder="127.0.0.1" /></label>
+                <label class="field">Порт<input id="proxy-port" type="number" required min="1" max="65535" inputmode="numeric" /></label>
+                <button id="save-proxy" class="button secondary" type="submit">Сохранить адрес</button>
+              </fieldset>
+            </form>
+            <p class="hint">Расширение не запускает Happ и не меняет его настройки.</p>
+          </section>
+        </div>
+        <section id="exceptions-section" class="panel exceptions-panel" aria-labelledby="exceptions-heading">
+          <div class="section-heading"><h2 id="exceptions-heading">Сайты напрямую <span id="count" class="count">0</span></h2><button id="clear" type="button" class="text-button danger-text" disabled>Очистить</button></div>
+          <p class="hint">В режиме «Авто» эти домены и все их поддомены открываются без прокси.</p>
+          <form id="site-form" class="add-site"><label class="field">Добавить домен<input id="new-site" type="text" required autocomplete="off" spellcheck="false" maxlength="2048" placeholder="example.com или ссылка на сайт" disabled /></label><button id="add-site" class="button primary" type="submit" disabled>Добавить</button></form>
+          <div id="clear-confirm" class="confirmation" hidden><p id="clear-description">Удалить все исключения?</p><div class="button-row"><button id="confirm-clear" class="button danger" type="button">Удалить все</button><button id="cancel-clear" class="button secondary" type="button">Отмена</button></div></div>
+          <label class="field search-field"><span class="visually-hidden">Найти домен в списке</span><input id="search" type="search" placeholder="Найти в списке" autocomplete="off" disabled /></label>
+          <p id="empty" class="empty" hidden>Исключений пока нет.</p>
+          <ul id="site-list" class="site-list" aria-label="Домены напрямую"></ul>
+        </section>
+      </div>
+      <footer class="settings-footer">Здесь показаны правила подключения. Фактический маршрут отдельных запросов Chrome может менять при недоступности прокси.</footer>
+    </main>
+  </body>
+</html>

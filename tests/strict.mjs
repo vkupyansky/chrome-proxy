@@ -1,4 +1,4 @@
-process.on("warning", warning => {
+process.on("warning", (warning) => {
   throw warning;
 });
 

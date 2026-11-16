@@ -1,0 +1,19 @@
+{
+  "name": "chrome-proxy",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.18.0"
+  },
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "build": "tsc -p tsconfig.json",
+    "format": "biome format --write src tests scripts manifest.json package.json tsconfig.json biome.json styles.css"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.8",
+    "@types/chrome": "0.3.7",
+    "typescript": "7.0.2"
+  }
+}

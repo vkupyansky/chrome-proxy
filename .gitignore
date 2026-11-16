@@ -5,3 +5,4 @@ coverage/
 test-results/
 .env
 .env.*
+node_modules/
